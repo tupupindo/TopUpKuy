@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top-Up Game - Contoh Codashop</title>
+    <title>Detail Top-Up Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
         <nav>
             <div class="logo">TopUpKuy</div>
             <ul>
-                <li><a href="#">Beranda</a></li>
+                <li><a href="index.html">Beranda</a></li>
                 <li><a href="#">Semua Game</a></li>
                 <li><a href="#">Bantuan</a></li>
             </ul>
@@ -19,27 +19,30 @@
     </header>
 
     <main>
-        <section class="hero">
-            <h1>Top-Up Game Favoritmu, Cepat & Aman!</h1>
-            <p>Pilih game, masukkan ID, bayar, dan dapatkan item instan.</p>
-        </section>
+        <section class="topup-form">
+            <h1 id="game-title">Detail Game</h1>
+            <form>
+                <label for="user-id">Masukkan User ID:</label>
+                <input type="text" id="user-id" name="user-id" required>
 
-        <section class="game-list">
-            <h2>Game Populer</h2>
-            <div class="grid-container">
-                <div class="game-card" data-game-id="mobile-legends">
-                    <img src="https://via.placeholder.com/150/0000FF/FFFFFF?text=MLBB" alt="Mobile Legends">
-                    <h3>Mobile Legends: Bang Bang</h3>
-                    <p>Top-up Diamond MLBB termurah dan tercepat.</p>
-                    <a href="game-detail.html?game=mobile-legends" class="btn">Beli Sekarang</a>
-                </div>
-                <div class="game-card" data-game-id="free-fire">
-                    <img src="https://via.placeholder.com/150/FF0000/FFFFFF?text=FF" alt="Free Fire">
-                    <h3>Garena Free Fire</h3>
-                    <p>Top-up Diamond FF dengan berbagai metode pembayaran.</p>
-                    <a href="game-detail.html?game=free-fire" class="btn">Beli Sekarang</a>
-                </div>
-            </div>
+                <label for="nominal">Pilih Nominal Top-Up:</label>
+                <select id="nominal" name="nominal">
+                    <option value="10">10 Diamond</option>
+                    <option value="50">50 Diamond</option>
+                    <option value="100">100 Diamond</option>
+                    <option value="500">500 Diamond</option>
+                </select>
+
+                <label for="metode">Metode Pembayaran:</label>
+                <select id="metode" name="metode">
+                    <option value="gopay">GoPay</option>
+                    <option value="dana">DANA</option>
+                    <option value="ovo">OVO</option>
+                    <option value="transfer">Transfer Bank</option>
+                </select>
+
+                <button type="submit">Bayar Sekarang</button>
+            </form>
         </section>
     </main>
 
@@ -47,6 +50,16 @@
         <p>&copy; 2025 TopUpKuy. Semua Hak Dilindungi.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const game = params.get("game");
+
+        const titleMap = {
+            "mobile-legends": "Mobile Legends: Bang Bang",
+            "free-fire": "Garena Free Fire"
+        };
+
+        document.getElementById("game-title").innerText = titleMap[game] || "Top-Up Game";
+    </script>
 </body>
 </html>
