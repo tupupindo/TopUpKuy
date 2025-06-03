@@ -1,52 +1,138 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top-Up Game - Contoh Codashop</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top-Up Game - TopUpKuy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    header {
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 20px;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #0099ff, #00cc66);
+      color: white;
+    }
+    .game-list {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .game-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .game-card:hover {
+      transform: translateY(-5px);
+    }
+    .game-card img {
+      width: 100%;
+      height: 178px;
+      object-fit: cover;
+    }
+    .game-card h3 {
+      margin: 15px;
+    }
+    .game-card p {
+      margin: 0 15px 15px;
+      color: #555;
+    }
+    .btn {
+      display: block;
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      text-decoration: none;
+      margin: 0 15px 15px;
+      border-radius: 6px;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    footer {
+      background-color: #1e1e1e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">TopUpKuy</div>
-            <ul>
-                <li><a href="#">Beranda</a></li>
-                <li><a href="#">Semua Game</a></li>
-                <li><a href="#">Bantuan</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <h1>Top-Up Game Favoritmu, Cepat & Aman!</h1>
-            <p>Pilih game, masukkan ID, bayar, dan dapatkan item instan.</p>
-        </section>
-
-        <section class="game-list">
-            <h2>Game Populer</h2>
-            <div class="grid-container">
-                <div class="game-card" data-game-id="mobile-legends">
-                    <img src="https://via.placeholder.com/150/0000FF/FFFFFF?text=MLBB" alt="Mobile Legends">
-                    <h3>Mobile Legends: Bang Bang</h3>
-                    <p>Top-up Diamond MLBB termurah dan tercepat.</p>
-                    <a href="game-detail.html?game=mobile-legends" class="btn">Beli Sekarang</a>
-                </div>
-                <div class="game-card" data-game-id="free-fire">
-                    <img src="https://via.placeholder.com/150/FF0000/FFFFFF?text=FF" alt="Free Fire">
-                    <h3>Garena Free Fire</h3>
-                    <p>Top-up Diamond FF dengan berbagai metode pembayaran.</p>
-                    <a href="game-detail.html?game=free-fire" class="btn">Beli Sekarang</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 TopUpKuy. Semua Hak Dilindungi.</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <header>
+    <nav>
+      <div class="logo">TopUpKuy</div>
+      <ul>
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#">Semua Game</a></li>
+        <li><a href="#">Bantuan</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Top-Up Game Favoritmu, Cepat & Aman!</h1>
+      <p>Pilih game, masukkan ID, bayar, dan dapatkan item instan.</p>
+    </section>
+    <section class="game-list">
+      <h2>Game Populer</h2>
+      <div class="grid-container">
+        <div class="game-card" data-game-id="mobile-legends">
+          <img src="MLBB-2025-tiles-178x178.jpg" alt="Mobile Legends">
+          <h3>Mobile Legends: Bang Bang</h3>
+          <p>Top-up Diamond MLBB termurah dan tercepat.</p>
+          <a href="game-detail.html?game=mobile-legends" class="btn">Beli Sekarang</a>
+        </div>
+        <div class="game-card" data-game-id="free-fire">
+          <img src="free-fire-tile-codacash-new.jpg" alt="Free Fire">
+          <h3>Garena Free Fire</h3>
+          <p>Top-up Diamond FF dengan berbagai metode pembayaran.</p>
+          <a href="game-detail.html?game=free-fire" class="btn">Beli Sekarang</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 TopUpKuy. Semua Hak Dilindungi.</p>
+  </footer>
 </body>
 </html>
