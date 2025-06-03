@@ -3,63 +3,909 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Top-Up Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Free Fire Top-up | topupkuy Clone</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef1f6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-left .menu-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .header-left .logo {
+            height: 30px; /* Adjust as needed */
+        }
+
+        .header-right .search-icon,
+        .header-right .currency-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .header-right .daftar-btn {
+            background-color: #8a2be2; /* Purple color */
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Game Info Section */
+        .game-info {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .game-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+
+        .game-info h2 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .game-info p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Step Section */
+        .step-section {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background-color: #8a2be2; /* Purple */
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 10px;
+        }
+
+        .step-header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        /* Input Field */
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .input-group input[type="text"] {
+            width: calc(100% - 40px);
+            padding: 12px 10px;
+            padding-right: 30px; /* Space for help icon */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .input-group .help-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            cursor: pointer;
+        }
+
+        .input-group p.info-text {
+            font-size: 0.85em;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        /* Nominal Grid */
+        .nominal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .nominal-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            position: relative;
+            background-color: #fff;
+        }
+
+        .nominal-card:hover, .nominal-card.selected {
+            border-color: #8a2be2; /* Purple border on hover/selected */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nominal-card .popular-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ff4081; /* Pink */
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .nominal-card img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .nominal-card h4 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .nominal-card .price-from {
+            font-size: 0.8em;
+            color: #999;
+            text-decoration: line-through;
+            margin-top: 5px;
+        }
+        .nominal-card .price-current {
+            font-weight: bold;
+            color: #e91e63; /* Reddish for price */
+            font-size: 1.2em;
+        }
+        .nominal-card .discount {
+            font-size: 0.8em;
+            color: #4CAF50; /* Green for discount */
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .nominal-card .rewards {
+            font-size: 0.75em;
+            color: #8a2be2;
+            margin-top: 5px;
+        }
+        .info-bubble {
+            background-color: #ffe0b2;
+            color: #e65100;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .info-bubble span {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+
+        /* Payment Method Grid */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .payment-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            background-color: #fff;
+        }
+
+        .payment-card:hover, .payment-card.selected {
+            border-color: #8a2be2; /* Purple border on hover/selected */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .payment-card img {
+            max-width: 80%;
+            height: auto;
+            max-height: 40px; /* Limit height for payment logos */
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+
+        .payment-card p {
+            font-size: 0.85em;
+            color: #555;
+            margin: 0;
+        }
+
+        /* Masukkan Detail Section */
+        .detail-section {
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            background-color: #fff;
+        }
+        .detail-section h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+        .detail-section .info-text {
+            font-size: 0.85em;
+            color: #777;
+            margin-bottom: 15px;
+        }
+        .detail-section input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        .detail-section .checkbox-group {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .detail-section .checkbox-group input {
+            margin-right: 8px;
+        }
+
+        /* Description and FAQ */
+        .description-section {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .description-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #333;
+        }
+
+        .description-section p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .description-section a {
+            color: #8a2be2;
+            text-decoration: none;
+        }
+        .description-section h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .description-section ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .description-section ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .description-section ul li:last-child {
+            border-bottom: none;
+        }
+        .description-section ul li .arrow-icon {
+            font-size: 1.2em;
+        }
+        .description-section .accordion-content {
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #666;
+            padding-top: 10px;
+            display: none; /* Hidden by default */
+        }
+        .description-section .accordion-item.active .accordion-content {
+            display: block; /* Show when active */
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+
+        .footer-section {
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            color: #fed000; /* Yellow for titles */
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #fed000;
+        }
+
+        .footer-social-icons a {
+            color: white;
+            font-size: 24px;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #ccc;
+        }
+
+        .footer-bottom .codashop-logo {
+            height: 25px; /* Adjust as needed */
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+        .footer-bottom img {
+            vertical-align: middle;
+        }
+
+        /* Basic Icons (using simple text/symbols for example) */
+        .icon-shield::before { content: "🛡️ "; }
+        .icon-question::before { content: "❓ "; }
+        .icon-info::before { content: "ℹ️ "; }
+        .icon-diamond::before { content: "💎 "; }
+        .icon-arrow-down::before { content: "▼"; }
+        .icon-mail::before { content: "✉️"; }
+        .icon-whatsapp::before { content: "📞"; }
+        .icon-facebook::before { content: "📘"; }
+        .icon-youtube::before { content: "▶️"; }
+        .icon-instagram::before { content: "📸"; }
+        .icon-tiktok::before { content: "🎵"; }
+        .icon-globe::before { content: "🌐"; }
+        .icon-indonesia::before { content: "🇮🇩"; } /* Placeholder for flag */
+
+        /* JavaScript for Accordion (Optional) */
+        .accordion-item {
+            border-bottom: 1px solid #eee;
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        .accordion-header {
+            padding: 12px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #555;
+        }
+        .accordion-content {
+            padding-bottom: 12px;
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #666;
+            display: none;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out; /* Smooth transition */
+            max-height: 0;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 200px; /* Adjust based on max content height */
+            display: block;
+        }
+        .accordion-item.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav>
-            <div class="logo">TopUpKuy</div>
-            <ul>
-                <li><a href="index.html">Beranda</a></li>
-                <li><a href="#">Semua Game</a></li>
-                <li><a href="#">Bantuan</a></li>
-            </ul>
-        </nav>
+        <div class="header-left">
+            <span class="menu-icon">☰</span>
+            <img src="https://www.codashop.com/images/codashop-logo-new.svg" alt="Codashop Logo" class="logo">
+        </div>
+        <div class="header-right">
+            <span class="search-icon">🔍</span>
+            <span class="currency-icon">💲</span>
+            <a href="#" class="daftar-btn">Daftar</a>
+        </div>
     </header>
 
-    <main>
-        <section class="topup-form">
-            <h1 id="game-title">Detail Game</h1>
-            <form>
-                <label for="user-id">Masukkan User ID:</label>
-                <input type="text" id="user-id" name="user-id" required>
-
-                <label for="nominal">Pilih Nominal Top-Up:</label>
-                <select id="nominal" name="nominal">
-                    <option value="10">10 Diamond</option>
-                    <option value="50">50 Diamond</option>
-                    <option value="100">100 Diamond</option>
-                    <option value="500">500 Diamond</option>
-                </select>
-
-                <label for="metode">Metode Pembayaran:</label>
-                <select id="metode" name="metode">
-                    <option value="gopay">GoPay</option>
-                    <option value="dana">DANA</option>
-                    <option value="ovo">OVO</option>
-                    <option value="transfer">Transfer Bank</option>
-                </select>
-
-                <button type="submit">Bayar Sekarang</button>
-            </form>
+    <div class="container">
+        <section class="game-info">
+            <img src="https://dl.dir.freefiremobile.com/common/web_event/ff.png" alt="Free Fire Icon">
+            <div>
+                <h2>Free Fire Top-up</h2>
+                <p><span class="icon-shield"></span> Pembayaran yang Aman</p>
+            </div>
         </section>
-    </main>
+
+        <section class="step-section">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>Masukkan Player ID</h3>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Masukkan Player ID">
+                <span class="help-icon">❓</span>
+                <p class="info-text">Untuk menemukan ID Anda, klik pada ikon karakter. User ID tercantum di bawah nama karakter Anda. Contoh: '5363266446'</p>
+            </div>
+        </section>
+
+        <section class="step-section">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>Pilih Nominal Top Up</h3>
+            </div>
+            <div class="info-bubble"><span class="icon-info"></span> 7.579 item dibeli dalam satu jam terakhir</div>
+            <div class="nominal-grid">
+                <div class="nominal-card">
+                    <h4>5 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 901</p>
+                    <p class="price-from">Rp. 5.495</p>
+                    <p class="discount">-84%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 4 Rewards</p>
+                </div>
+                <div class="nominal-card selected">
+                    <span class="popular-badge">POPULAR</span>
+                    <h4>12 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 1.802</p>
+                    <p class="price-from">Rp. 6.037</p>
+                    <p class="discount">-74%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 9 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>70 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 7.207</p>
+                    <p class="price-from">Rp. 9.279</p>
+                    <p class="discount">-22%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 36 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>140 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 18.027</p>
+                    <p class="price-from">Rp. 27.027</p>
+                    <p class="discount">-33%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 90 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>355 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 45.045</p>
+                    <p class="price-from">Rp. 50.000</p>
+                    <p class="discount">-10%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 225 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>720 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 90.090</p>
+                    <p class="price-from">Rp. 102.026</p>
+                    <p class="discount">-12%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 450 Rewards</p>
+                </div>
+                 <div class="nominal-card">
+                    <h4>1450 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 180.180</p>
+                    <p class="price-from">Rp. 270.270</p>
+                    <p class="discount">-33%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 900 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>2180 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 270.270</p>
+                    <p class="price-from">Rp. 450.450</p>
+                    <p class="discount">-40%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 1.351 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>3640 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 450.450</p>
+                    <p class="price-from">Rp. 576.577</p>
+                    <p class="discount">-22%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 2.252 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>7290 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 900.901</p>
+                    <p class="price-from">Rp. 1.016.550</p>
+                    <p class="discount">-11%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 4.504 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>36500 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 4.504.505</p>
+                    <p class="price-from">Rp. 5.000.000</p>
+                    <p class="discount">-10%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 22.522 Rewards</p>
+                </div>
+                <div class="nominal-card">
+                    <h4>73100 Diamonds</h4>
+                    <img src="https://via.placeholder.com/40/00bcd4/FFFFFF?text=💎" alt="Diamond Icon">
+                    <p class="price-current">Rp. 9.009.009</p>
+                    <p class="price-from">Rp. 10.000.001</p>
+                    <p class="discount">-10%</p>
+                    <p class="rewards"><span class="icon-diamond"></span> 45.045 Rewards</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="step-section">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>Pilih pembayaran</h3>
+            </div>
+            <div class="payment-grid">
+                <div class="payment-card">
+                    <img src="https://asset.brandfetch.io/id_g_r-Y3e/id_g_r-Y3e_light_thumb.png?updated=1672323380000" alt="QRIS">
+                    <p>QRIS</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/gopay.png" alt="GoPay">
+                    <p>GoPay</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/ovo.png" alt="OVO">
+                    <p>OVO</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/dana.png" alt="DANA">
+                    <p>Dana</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/banktransfer.png" alt="Bank Transfer">
+                    <p>Bank Transfer</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/telkomsel.png" alt="Telkomsel">
+                    <p>Telkomsel</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/indosat.png" alt="Indosat">
+                    <p>Indosat</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/tri.png" alt="Tri Indonesia">
+                    <p>Tri Indonesia</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/xl_axiata.png" alt="XL Axiata">
+                    <p>XL Axiata</p>
+                </div>
+                 <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/smartfren.png" alt="Smartfren">
+                    <p>Smartfren</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/shopeepay.png" alt="ShopeePay">
+                    <p>ShopeePay</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/linkaja.png" alt="LinkAja">
+                    <p>LinkAja</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/kredivo.png" alt="Kredivo">
+                    <p>Kredivo</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/alfamart.png" alt="Alfamart">
+                    <p>Alfamart</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/indomaret.png" alt="Indomaret">
+                    <p>Indomaret</p>
+                </div>
+                <div class="payment-card">
+                    <img src="https://www.codashop.com/images/payment-methods/ID/visamaster.png" alt="Kartu Kredit">
+                    <p>Kartu Kredit</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="step-section">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>Masukkan Detail</h3>
+            </div>
+            <p class="info-text">Opsional: Jika anda ingin mendapatkan bukti pembayaran atas pembelian anda, harap mengisi alamat emailnya Coda Rewards sebesar 0.5% yang terkirim akan di notify ke email kamu</p>
+            <div class="input-group">
+                <input type="email" placeholder="Harap masukkan email">
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="promoCheckbox">
+                <label for="promoCheckbox">Ya, Saya ingin menerima berita dan promosi melalui SMS atau Whatsapp</label>
+            </div>
+        </section>
+
+        <section class="description-section">
+            <h2>Top Up FF murah hanya di Codashop Indonesia</h2>
+            <p>Codashop merupakan toko resmi untuk pembelian kredit game dan aplikasi secara resmi. Kami telah dipercaya oleh jutaan gamers dan pengguna aplikasi di 50 negara termasuk Indonesia. <a href="#">Topup sekarang!</a></p>
+            <p>Codashop Indonesia menyediakan Diamond untuk Garena Free Fire yang membuka akses konten premium di dalam game menyukai Booyah Pass dan masih banyak lagi, membawa pengalaman bermain game Anda ke level yang lebih tinggi!</p>
+
+            <h3>Mengapa memilih Codashop untuk top up FF?</h3>
+            <ul>
+                <li>
+                    <strong>Mudah & cepat</strong>
+                    <div class="accordion-content">
+                        Hanya perlu hitungan detik untuk menyelesaikan beli Free Fire Diamonds di Codashop.
+                    </div>
+                </li>
+                <li>
+                    <strong>Instan & Aman</strong>
+                    <div class="accordion-content">
+                        Pembelian top up akan langsung dikirim ke in-game account.
+                    </div>
+                </li>
+                <li>
+                    <strong>Metode pembayaran yang mudah</strong>
+                    <div class="accordion-content">
+                        Bayar menggunakan metode pembayaran paling populer di Indonesia.
+                    </div>
+                </li>
+                <li>
+                    <strong>Layanan Pelanggan Cepat & Ramah</strong>
+                    <div class="accordion-content">
+                        Tim CS terbaik kami selalu siap membantumu kapanpun, di manapun. <a href="#">Hubungi kami!</a>
+                    </div>
+                </li>
+                 <li>
+                    <strong>Promo yang menarik</strong>
+                    <div class="accordion-content">
+                        Jangan lewatkan penawaran menarik, hadiah, dan masih banyak lagi. Hanya di Codashop!
+                    </div>
+                </li>
+            </ul>
+
+            <h3>Cara Top up FF?</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Cara Top up FF?</span>
+                    <span class="arrow-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>1. Masukkan ID Anda.</p>
+                    <p>2. Pilih jumlah Diamond yang Anda inginkan.</p>
+                    <p>3. Selesaikan pembayaran Anda.</p>
+                    <p>4. Diamond akan langsung ditambahkan ke akun Free Fire Anda.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Cara top up FF pakai pulsa</span>
+                    <span class="arrow-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Anda dapat top up FF menggunakan pulsa Telkomsel, Indosat, Tri, XL Axiata, dan Smartfren. Pilih metode pembayaran pulsa di langkah 3 saat Anda melakukan top up.</p>
+                </div>
+            </div>
+             <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Cara top up Booyah Pass?</span>
+                    <span class="arrow-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Booyah Pass tidak dijual secara langsung. Anda bisa menggunakan Diamond yang Anda top up untuk membeli Booyah Pass di dalam game Free Fire.</p>
+                </div>
+            </div>
+             <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Berapa harga top up FF?</span>
+                    <span class="arrow-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Harga top up FF bervariasi tergantung pada jumlah Diamond yang Anda pilih. Silakan lihat daftar nominal di atas untuk harga terbaru.</p>
+                </div>
+            </div>
+             <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Top up FF termurah</span>
+                    <span class="arrow-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Kami menawarkan harga Diamond FF yang kompetitif. Periksa bagian promo untuk diskon dan penawaran terbaik.</p>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <footer>
-        <p>&copy; 2025 TopUpKuy. Semua Hak Dilindungi.</p>
+        <div class="container">
+            <div class="footer-section">
+                <h4>Untuk Penerbit</h4>
+                <ul>
+                    <li><a href="#">Daftarkan judul Anda di Codashop</a></li>
+                    <li><a href="#">Pelajari lebih lanjut tentang kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Butuh Bantuan?</h4>
+                <ul>
+                    <li><a href="#"><span class="icon-whatsapp"></span> Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Area</h4>
+                <ul>
+                    <li><a href="#"><span class="icon-indonesia"></span> Indonesia <span class="icon-arrow-down"></span></a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Dapatkan berita Coda di:</h4>
+                <div class="footer-social-icons">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                    <a href="#"><span class="icon-youtube"></span></a>
+                    <a href="#"><span class="icon-instagram"></span></a>
+                    <a href="#"><span class="icon-tiktok"></span></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; Hak Cipta Coda Payments</p>
+                <p>
+                    <a href="#">Pemasaran dan Kemitraan</a> .
+                    <a href="#">Untuk Penerbit Game</a> .
+                    <a href="#">Syarat & Ketentuan</a> .
+                    <a href="#">Kebijakan Privasi</a> .
+                    <a href="#">Bounty bug</a> .
+                    <a href="#">Menjadi distributor</a>
+                </p>
+                <img src="https://www.codashop.com/images/codashop-logo-new.svg" alt="Codashop Logo" class="codashop-logo">
+            </div>
+        </div>
     </footer>
 
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const game = params.get("game");
+        // JavaScript for accordion functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionItems = document.querySelectorAll('.accordion-item');
 
-        const titleMap = {
-            "mobile-legends": "Mobile Legends: Bang Bang",
-            "free-fire": "Garena Free Fire"
-        };
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
 
-        document.getElementById("game-title").innerText = titleMap[game] || "Top-Up Game";
+                header.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                    if (item.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = 0;
+                    }
+                });
+            });
+
+            // Optional: Handle nominal card selection
+            const nominalCards = document.querySelectorAll('.nominal-card');
+            nominalCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    nominalCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                });
+            });
+
+            // Optional: Handle payment card selection
+            const paymentCards = document.querySelectorAll('.payment-card');
+            paymentCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    paymentCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                });
+            });
+        });
     </script>
 </body>
 </html>
