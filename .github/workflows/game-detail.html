@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Top-Up Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">TopUpKuy</div>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="#">Semua Game</a></li>
+                <li><a href="#">Bantuan</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="topup-form">
+            <h1 id="game-title">Detail Game</h1>
+            <form>
+                <label for="user-id">Masukkan User ID:</label>
+                <input type="text" id="user-id" name="user-id" required>
+
+                <label for="nominal">Pilih Nominal Top-Up:</label>
+                <select id="nominal" name="nominal">
+                    <option value="10">10 Diamond</option>
+                    <option value="50">50 Diamond</option>
+                    <option value="100">100 Diamond</option>
+                    <option value="500">500 Diamond</option>
+                </select>
+
+                <label for="metode">Metode Pembayaran:</label>
+                <select id="metode" name="metode">
+                    <option value="gopay">GoPay</option>
+                    <option value="dana">DANA</option>
+                    <option value="ovo">OVO</option>
+                    <option value="transfer">Transfer Bank</option>
+                </select>
+
+                <button type="submit">Bayar Sekarang</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TopUpKuy. Semua Hak Dilindungi.</p>
+    </footer>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const game = params.get("game");
+
+        const titleMap = {
+            "mobile-legends": "Mobile Legends: Bang Bang",
+            "free-fire": "Garena Free Fire"
+        };
+
+        document.getElementById("game-title").innerText = titleMap[game] || "Top-Up Game";
+    </script>
+</body>
+</html>
